@@ -42,8 +42,12 @@ def main():
 
     except ValueError as e:
         print("Error:", e)
-        # If there's an error, terminate gracefully and provide instructions
-        print("Please restart the program and provide valid input.")
+        print("Please make sure you provide valid inputs:")
+        print(" - The plaintext must contain only uppercase letters with no spaces.")
+        print(" - The keyword must contain only uppercase letters.")
+
+        # Allow the user to try again if there's an error
+        main()
 
 
 if __name__ == "__main__":
