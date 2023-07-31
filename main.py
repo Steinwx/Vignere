@@ -24,30 +24,51 @@ def vigenere_encrypt(plaintext, keyword):
     return ''.join(ciphertext)
 
 
+def get_valid_input(prompt, validator_func):
+    """
+    Get user input and validate it using the provided validator function.
+
+    Args:
+        prompt (str): The prompt message to display to the user.
+        validator_func (function): The function used to validate the user input.
+
+    Returns:
+        str: The user input that passed the validation.
+    """
+    while True:
+        user_input = input(prompt).strip().upper()
+        if validator_func(user_input):
+            return user_input
+        print("Invalid input. Please try again.")
+
+
+def is_valid_uppercase(text):
+    """
+    Check if the input text contains only uppercase letters.
+
+    Args:
+        text (str): The input text to be validated.
+
+    Returns:
+        bool: True if the input text contains only uppercase letters, False otherwise.
+    """
+    return text.isalpha() and text.isupper()
+
+
 def main():
     """
     Main function to take user input and perform Vigenere encryption.
     """
-    try:
-        plaintext = input("Enter the plaintext (all uppercase letters, no spaces): ").upper()
-        if not plaintext.isalpha():
-            raise ValueError("Invalid input. The plaintext must contain only uppercase letters with no spaces.")
+    print("=== Vigenere Cipher Encryption Program ===")
+    
+    plaintext_prompt = "Enter the plaintext (all uppercase letters, no spaces): "
+    keyword_prompt = "Enter the keyword (all uppercase letters): "
 
-        keyword = input("Enter the keyword (all uppercase letters): ").upper()
-        if not keyword.isalpha():
-            raise ValueError("Invalid input. The keyword must contain only uppercase letters.")
+    plaintext = get_valid_input(plaintext_prompt, is_valid_uppercase)
+    keyword = get_valid_input(keyword_prompt, is_valid_uppercase)
 
-        ciphertext = vigenere_encrypt(plaintext, keyword)
-        print("Ciphertext:", ciphertext)
-
-    except ValueError as e:
-        print("Error:", e)
-        print("Please make sure you provide valid inputs:")
-        print(" - The plaintext must contain only uppercase letters with no spaces.")
-        print(" - The keyword must contain only uppercase letters.")
-
-        # Allow the user to try again if there's an error
-        main()
+    ciphertext = vigenere_encrypt(plaintext, keyword)
+    print("Ciphertext:", ciphertext)
 
 
 if __name__ == "__main__":
